@@ -6,7 +6,7 @@
 
 **Architecture:** A focused `phone_test.py` launcher will discover a usable private IPv4 address, print same-network instructions, and run the existing Flask application on all LAN interfaces. The normal `app.py` entry point remains loopback-only, and no inference or browser behavior changes.
 
-**Tech Stack:** Python 3.11 standard library (`ipaddress`, `socket`), Flask application factory, `unittest`, PowerShell run instructions
+**Tech Stack:** Python 3.8 standard library (`ipaddress`, `socket`, `typing`), Flask application factory, `unittest`, PowerShell run instructions
 
 ## Global Constraints
 
@@ -116,7 +116,7 @@ if __name__ == "__main__":
 Run from `ui`:
 
 ```powershell
-..\yolo311_env\Scripts\python.exe -m unittest tests.test_phone_test -v
+..\yolo_env\Scripts\python.exe -m unittest discover -s tests -p "test_phone_test.py" -v
 ```
 
 Expected: `ERROR` because `phone_test.py` does not exist.
@@ -127,8 +127,8 @@ Create `ui/phone_test.py`:
 
 ```python
 import socket
-from collections.abc import Iterable
 from ipaddress import IPv4Address, ip_address
+from typing import Iterable, List, Optional
 
 from app import create_app
 
@@ -137,7 +137,7 @@ HOST = "0.0.0.0"
 PORT = 5000
 
 
-def select_private_ipv4(addresses: Iterable[str]) -> str | None:
+def select_private_ipv4(addresses: Iterable[str]) -> Optional[str]:
     for candidate in addresses:
         try:
             address = ip_address(candidate)
@@ -154,8 +154,8 @@ def select_private_ipv4(addresses: Iterable[str]) -> str | None:
     return None
 
 
-def discover_private_ipv4() -> str | None:
-    candidates: list[str] = []
+def discover_private_ipv4() -> Optional[str]:
+    candidates: List[str] = []
     try:
         with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as route_socket:
             route_socket.connect(("192.0.2.1", 80))
@@ -181,11 +181,11 @@ def main() -> None:
     print("Keep this terminal and computer running during the test.")
     print("Use this only on a trusted Wi-Fi network.")
     if address:
-        print(f"\nOn your phone, open: http://{address}:{PORT}")
+        print("\nOn your phone, open: http://{}:{}".format(address, PORT))
     else:
         print("\nI could not detect the Wi-Fi IPv4 address automatically.")
         print("Run ipconfig, find the Wi-Fi IPv4 Address, then open:")
-        print(f"http://<IPv4-address>:{PORT}")
+        print("http://<IPv4-address>:{}".format(PORT))
     print("If Windows asks, allow Python access on private networks only.\n")
 
     create_app().run(
@@ -205,7 +205,7 @@ if __name__ == "__main__":
 Run from `ui`:
 
 ```powershell
-..\yolo311_env\Scripts\python.exe -m unittest tests.test_phone_test -v
+..\yolo_env\Scripts\python.exe -m unittest discover -s tests -p "test_phone_test.py" -v
 ```
 
 Expected: four tests run and `OK`.
@@ -238,11 +238,11 @@ Flask's development server and is not intended for public internet access.
 Run from `ui`:
 
 ```powershell
-..\yolo311_env\Scripts\python.exe -m unittest discover -s tests -p "test_*.py" -v
+..\yolo_env\Scripts\python.exe -m unittest discover -s tests -p "test_*.py" -v
 node --test tests/core.test.js
 node --check static/js/core.js
 node --check static/js/app.js
-..\yolo311_env\Scripts\python.exe -m compileall -q .
+..\yolo_env\Scripts\python.exe -m compileall -q .
 ```
 
 Expected: all Python and JavaScript tests pass, both JavaScript syntax checks exit 0, and compilation exits 0 without output.
@@ -252,7 +252,7 @@ Expected: all Python and JavaScript tests pass, both JavaScript syntax checks ex
 Run from `ui`:
 
 ```powershell
-..\yolo311_env\Scripts\python.exe phone_test.py
+..\yolo_env\Scripts\python.exe phone_test.py
 ```
 
 Expected: output includes a URL shaped like `http://192.168.x.x:5000` or `http://10.x.x.x:5000`, Flask reports `Running on all addresses (0.0.0.0)`, and the server stays running until `Ctrl+C`. Opening the printed URL should render FireWatch without loading the YOLO checkpoint until an image is analyzed.
