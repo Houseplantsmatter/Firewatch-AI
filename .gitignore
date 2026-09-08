@@ -1,0 +1,60 @@
+# Python environments, bytecode, and tooling caches
+.venv/
+venv/
+env/
+yolo_env/
+yolo311_env/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+*.egg-info/
+build/
+dist/
+
+# Local datasets, experiment outputs, and model binaries
+/data/
+/dataset/
+/datasets/
+/runs/
+/backups/
+*.pt
+*.pth
+*.onnx
+*.engine
+*.tflite
+*.cache
+*.log
+
+# Loose local test images (keep application assets under ui/static/)
+/*.jpg
+/*.jpeg
+/*.jfif
+/*.png
+/*.webp
+/*.bmp
+/*.tif
+/*.tiff
+
+# Credentials and machine-specific configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+.codex/
+.agents/
+.superpowers/
+.vscode/
+.idea/
+
+# Other generated and operating-system files
+node_modules/
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.tmp
+*.bak

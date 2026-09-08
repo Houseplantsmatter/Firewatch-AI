@@ -1,8 +1,9 @@
 # FireWatch AI
 
 FireWatch is a responsive local web interface that performs real YOLO inference
-on uploaded images. It uses the completed V2 fire-and-smoke checkpoint at
-`runs/detect/fire_smoke_v2/weights/best.pt`.
+on uploaded images. It expects a trained V2 fire-and-smoke checkpoint at
+`runs/detect/fire_smoke_v2/weights/best.pt`. Model weights are excluded from Git;
+see the [project setup guide](../README.md) to supply or train the checkpoint.
 
 ## Setup
 
@@ -69,14 +70,17 @@ python -m compileall -q .
 
 The complete Python suite uses an injected inference service and does not load
 the checkpoint. To run a one-image smoke test against the real checkpoint from
-`ui`, use:
+`ui`, replace `path/to/image.jpg` with your own local image and use:
 
 ```powershell
-python -c "from pathlib import Path; from inference import InferenceService; root=Path('..').resolve(); print(InferenceService(root / 'runs/detect/fire_smoke_v2/weights/best.pt').predict((root / 'AoF00001.jpg').read_bytes()))"
+python -c "from pathlib import Path; from inference import InferenceService; root=Path('..').resolve(); print(InferenceService(root / 'runs/detect/fire_smoke_v2/weights/best.pt').predict(Path('path/to/image.jpg').read_bytes()))"
 ```
 
 This prints a normalized real-model result and must not create a new prediction
 directory under `runs/detect`.
+
+The original local example image, `AoF00001.jpg`, is excluded from Git. Use
+your own image on a fresh clone.
 
 ## Limitations and safety
 

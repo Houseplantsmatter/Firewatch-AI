@@ -1,0 +1,3 @@
+# Use the same dependency constraints as the project root.
+# Flask, Werkzeug, Pillow, and ultralytics are declared there.
+-r ../requirements.txt

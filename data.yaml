@@ -1,0 +1,11 @@
+# Ultralytics object-detection dataset configuration.
+# Paths below are resolved relative to this YAML file.
+path: ./data
+train: train/images
+val: val/images
+test: test/images
+
+# Keep this order aligned with the class IDs in every YOLO label file.
+names:
+  0: smoke
+  1: fire

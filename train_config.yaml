@@ -1,0 +1,40 @@
+# Reproducible training configuration. Override any value with:
+#   python train_yolo.py --set key=value
+
+model: yolo11s.pt
+data: data.yaml
+
+# Core training settings
+epochs: 100
+imgsz: 640
+batch: auto          # CUDA: Ultralytics auto-batch; CPU/MPS: safe fixed batch
+workers: auto
+device: auto
+patience: 30
+optimizer: auto
+pretrained: true
+cache: false         # Change to disk after confirming you have enough disk space
+amp: true
+seed: 42
+deterministic: true
+
+# Conservative geometric augmentation for fire/smoke scenes
+degrees: 5.0
+translate: 0.10Alri
+scale: 0.35
+shear: 2.0
+perspective: 0.0005
+fliplr: 0.5
+flipud: 0.0
+mosaic: 1.0
+mixup: 0.0
+close_mosaic: 10
+
+# Output and reporting
+project: runs/detect
+name: fire_smoke_yolo11s
+exist_ok: false
+plots: true
+save: true
+save_period: 10
+verbose: true

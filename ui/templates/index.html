@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="FireWatch AI image-analysis interface prototype">
+  <title>FireWatch AI</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='%23d95028'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <header class="site-header">
+    <a class="brand" href="#analyze" data-view="analyze" aria-label="FireWatch AI home"><span aria-hidden="true">◊</span> FireWatch <em>AI</em></a>
+    <nav aria-label="Primary navigation">
+      <button class="nav-button is-active" type="button" data-view="analyze" aria-current="page">Analyze</button>
+      <button class="nav-button" type="button" data-view="history">History <span id="history-count" class="count-badge">0</span></button>
+    </nav>
+    <p class="ready-status"><span aria-hidden="true">●</span> Ready</p>
+  </header>
+
+  <main id="main-content">
+    <section id="analyze-view" class="view" aria-labelledby="analyze-title">
+      <div id="upload-panel" class="upload-layout">
+        <div class="intro-copy"><p class="eyebrow">Image analysis</p><h1 id="analyze-title">See the warning signs sooner.</h1><p>Check a photo for possible fire or smoke.</p></div>
+        <div class="upload-card">
+          <input id="file-input" class="visually-hidden" type="file" accept="image/jpeg,image/png,image/webp">
+          <label id="drop-zone" class="drop-zone" for="file-input">
+            <span class="upload-icon" aria-hidden="true">↑</span><strong>Upload an image</strong>
+            <span>Drag and drop, or choose a JPG, PNG, or WebP file</span><small>Maximum size: 10 MB</small>
+          </label>
+          <p id="upload-error" class="inline-message error-message" role="alert" hidden></p>
+          <div id="preview-panel" class="preview-panel" hidden>
+            <img id="preview-image" alt="Selected image preview">
+            <div><strong id="file-name"></strong><span id="file-size"></span></div>
+            <button id="replace-button" class="button secondary" type="button">Replace</button>
+            <button id="analyze-button" class="button primary" type="button">Analyze image</button>
+          </div>
+        </div>
+      </div>
+
+      <section id="progress-panel" class="progress-panel" aria-labelledby="progress-title" hidden>
+        <p class="eyebrow">Analyzing image</p><h2 id="progress-title">Looking for possible fire or smoke…</h2>
+        <div class="progress-track" aria-hidden="true"><span></span></div>
+      </section>
+
+      <section id="result-panel" class="result-layout" aria-labelledby="result-title" hidden>
+        <div class="result-visual"><div class="image-stage"><img id="result-image" alt="Analyzed scene"><div id="detection-box" class="detection-box" hidden><span id="box-label"></span></div></div></div>
+        <aside class="result-summary"><p id="result-kicker" class="eyebrow"></p><h2 id="result-title"><span id="result-icon" class="category-icon" aria-hidden="true"></span><span id="result-title-text"></span></h2><p id="result-description"></p><p id="result-storage-message" class="inline-message" role="status" hidden></p><dl><div><dt>Confidence</dt><dd id="result-confidence"></dd></div><div><dt>Detections</dt><dd id="result-count"></dd></div><div><dt>Analyzed</dt><dd id="result-time"></dd></div></dl><div class="guidance"><h3>What to do next</h3><p id="result-guidance"></p></div><button id="analyze-another-button" class="button primary" type="button">Analyze another image</button><button class="button secondary" data-view="history" type="button">View history</button></aside>
+      </section>
+    </section>
+
+    <section id="history-view" class="view" aria-labelledby="history-title" hidden>
+      <div class="section-heading"><div><p class="eyebrow">Saved on this device</p><h1 id="history-title">Detection history</h1></div><button id="clear-history-button" class="button text-button" type="button">Clear history</button></div>
+      <div id="history-filters" class="filter-group" aria-label="Filter history"><button class="filter-button is-active" data-filter="all" type="button" aria-pressed="true">All</button><button class="filter-button" data-filter="fire" type="button" aria-pressed="false">Fire</button><button class="filter-button" data-filter="smoke" type="button" aria-pressed="false">Smoke</button><button class="filter-button" data-filter="clear" type="button" aria-pressed="false">No concern</button></div>
+      <p id="history-message" class="inline-message" role="status" tabindex="-1" hidden></p><div id="history-list" class="history-list"></div>
+    </section>
+  </main>
+
+  <footer><strong>Safety notice</strong><p>FireWatch AI is an additional safety tool. It does not replace working smoke alarms, official emergency alerts, trained firefighters, or calling 911 during an emergency.</p></footer>
+  <div id="live-region" class="visually-hidden" aria-live="polite" aria-atomic="true"></div>
+  <script src="{{ url_for('static', filename='js/core.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/app.js') }}" defer></script>
+  <link rel="manifest" href="/manifest.json">
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
+      });
+    }
+  </script>
+</body>
+</html>
