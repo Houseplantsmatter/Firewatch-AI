@@ -142,12 +142,6 @@ not require the training dataset or trained weights.
 | `*.yaml`, `requirements.txt`, `tests/` | Configuration, dependencies, and training tests |
 | `docs/` | Design notes and implementation plans, including future work |
 
-`.gitignore` excludes virtual environments, datasets, training/prediction runs,
-model binaries, backups, caches, local agent/editor settings, credentials,
-and loose images in the repository root. Application icons under `ui/static/`
-remain included. Excluded files remain on your computer. Distribute model
-weights separately when needed instead of committing experiment outputs.
-
 ## Limitations
 
 Predictions can be wrong. A result with no detection does not establish that
