@@ -144,6 +144,7 @@ not require the training dataset or trained weights.
 
 ## Limitations
 
-Predictions can be wrong. A result with no detection does not establish that
-a scene is safe. FireWatch is a prototype and does not replace smoke alarms,
-official emergency alerts, or professional emergency response.
+FireWatch is still a prototype. It can miss fire or smoke and flag images
+that show neither, so don't rely on it to tell you whether a situation is safe.
+Keep using smoke alarms, follow official alerts, and contact emergency services
+if you suspect a fire.
