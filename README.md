@@ -6,8 +6,8 @@ detection count. The repository also includes dataset preparation, training,
 evaluation, and command-line inference tools.
 
 The current application runs on a computer, with an optional phone launcher
-for devices on the same Wi-Fi. Design documents describe future work; uploading
-this repository does not deploy a working GitHub Pages application.
+for devices on the same Wi-Fi. Uploading this repository does not deploy a
+working GitHub Pages application.
 
 ## Setup
 
@@ -140,7 +140,6 @@ not require the training dataset or trained weights.
 | `train_yolo.py`, `train_yolo_v2.py` | Training and evaluation tools |
 | `detect.py`, `check_environment.py` | Detection CLI and environment diagnostics |
 | `*.yaml`, `requirements.txt`, `tests/` | Configuration, dependencies, and training tests |
-| `docs/` | Design notes and implementation plans, including future work |
 
 ## Limitations
 
